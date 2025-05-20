@@ -1,5 +1,10 @@
 ﻿
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using project_onlineClassroom.CustomError;
+using project_onlineClassroom.DTOs.UserDTOs;
+using project_onlineClassroom.Interfaces;
 using project_onlineClassroom.Models;
 using project_onlineClassroom.Repositories;
 
@@ -9,21 +14,36 @@ namespace project_onlineClassroom.Controllers
     [Route("user")]
     public class UserController : ControllerBase
     {
-        private readonly UserRepository _userRepository;
-        public UserController(UserRepository userRepository) : base() => _userRepository = userRepository;
+        private readonly IUserService _userService;
+        public UserController(IUserService userService) : base() => _userService = userService;
 
         // GET: User
-        [HttpGet("")]
-        public async Task<IActionResult> Index()
+        [HttpGet("me")]
+        [Authorize]
+        [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProfileResponse), StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetProfile()
         {
             try
             {
-                List<User> users = await _userRepository.GetAllAsync();
-                return Ok(users);
+                string? userId = User.FindFirstValue("id");
+                if (String.IsNullOrEmpty(userId) || !int.TryParse(userId, out int id)) throw new InvalidTokenException();
+                User user = await _userService.GetUserProfileByIdAsync(id);
+                return Ok(new ProfileResponse(new ProfileDTO(user)));
+            }
+            catch (UserNotFoundException ex)
+            {
+                return NotFound(new ProfileResponse(false, ex.Message));
+            }
+            catch (InvalidTokenException ex)
+            {
+                return Unauthorized(new ProfileResponse(false, ex.Message));
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error fetching users: {ex.Message}");
+                return StatusCode(500, new ProfileResponse(false, ex.Message));
             }
         }
     }

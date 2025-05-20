@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using JWT;
+﻿using JWT;
 using JWT.Algorithms;
 using JWT.Exceptions;
 using JWT.Serializers;
@@ -10,10 +9,17 @@ namespace project_onlineClassroom.Util
     public class JWTHelper
     {
         private readonly string _secretKey;
+        private readonly double _expirationInMinutes;
 
-        public JWTHelper(IConfiguration configuration)
+        public JWTHelper()
         {
-            _secretKey = configuration["AUTH_SECRET"] ?? throw new ArgumentNullException("AUTH_SECRET not found in configuration");
+            _secretKey = DotNetEnv.Env.GetString("AUTH_SECRET") ?? throw new ArgumentNullException("AUTH_SECRET not found in configuration");
+            string expirationString = DotNetEnv.Env.GetString("JWT_DURATION") ?? throw new ArgumentNullException("JWT_DURATION not found in configuration");
+            if (!double.TryParse(expirationString, out _expirationInMinutes))
+            {
+                throw new ArgumentException("JWT_DURATION is not a valid number");
+            }
+
         }
         //Mock Payload Object. TODO: Create a real DTO for the payload
 
@@ -30,7 +36,7 @@ namespace project_onlineClassroom.Util
                 { "email", user.Email },
                 { "firstName", user.FirstName },
                 { "lastName", user.LastName },
-                { "exp", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds() }
+                { "exp", DateTimeOffset.UtcNow.AddMinutes(_expirationInMinutes).ToUnixTimeSeconds() }
         }; // Token expiration time
             string token = encoder.Encode(payload, _secretKey);
             return token;
