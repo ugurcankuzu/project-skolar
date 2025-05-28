@@ -77,3 +77,7 @@ Veritabanı, aşağıdaki ana tabloları içerir:
 ## 📄 API Dokümantasyonu
 
 Swagger Arayüzünden (/swagger/index.html) tüm API endpointleri detaylıca incelenebilir.
+
+## ✒️ Projeye Ait İlerlemeyi <Devlog> adlı Medium platformundaki yazı serimden takip edebilirsiniz.
+
+🌐 [**\<Devlog> Project-Skolar #1 — Tech Stack, Kurulumlar ve Başlangıç**](https://ugurcankzuit.medium.com/devlog-project-skolar-1-tech-stack-kurulumlar-ba%C5%9Flang%C4%B1%C3%A7-d6383ddd1698)
