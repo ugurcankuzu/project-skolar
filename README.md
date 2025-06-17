@@ -49,7 +49,7 @@ Veritabanı, aşağıdaki ana tabloları içerir:
 1. Bu repoyu klonlayın:
 
    ```bash
-   git clone https://github.com/kullaniciadi/project-skolar.git
+   git clone https://github.com/ugurcankuzu/project-skolar.git
    ```
 
 2. Gerekli NuGet paketlerini yükleyin:
