@@ -81,3 +81,6 @@ Swagger Arayüzünden (/swagger/index.html) tüm API endpointleri detaylıca inc
 ## ✒️ Projeye Ait İlerlemeyi <Devlog> adlı Medium platformundaki yazı serimden takip edebilirsiniz.
 
 🌐 [**\<Devlog> Project-Skolar #1 — Tech Stack, Kurulumlar ve Başlangıç**](https://ugurcankzuit.medium.com/devlog-project-skolar-1-tech-stack-kurulumlar-ba%C5%9Flang%C4%B1%C3%A7-d6383ddd1698)
+🌐 [**\<Devlog> Project-Skolar #2 — N-Katmanlı Mimari, JWT Entegrasyonu ve API’de Veri Akışı (DTO)**](https://medium.com/@ugurcankzuit/devlog-project-skolar-2-n-katmanl%C4%B1-mimari-jwt-entegrasyonu-ve-apide-veri-ak%C4%B1%C5%9F%C4%B1-dto-e3f9851a8724)
+🌐 [**\<Devlog> Project-Skolar #3 — Google OAuth, Tasarım ve Next.js**](https://medium.com/p/ad9e560da48c)
+
