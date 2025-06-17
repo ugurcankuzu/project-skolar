@@ -2,6 +2,8 @@
 
 Project Skolar, ASP.NET Core ve SQL Server kullanılarak geliştirilen bir çevrimiçi sınıf yönetim sistemidir. Bu proje, eğitimciler ve öğrenciler arasında etkileşimli bir öğrenme ortamı sağlamayı hedefler. JWT tabanlı kimlik doğrulama, çok katmanlı mimari ve DTO kullanımı gibi modern yazılım geliştirme tekniklerini içerir.
 
+📌[**Frontend Repository**](https://github.com/ugurcankuzu/project-skolar-front)
+
 ## 🚀 Özellikler
 
 * **Kullanıcı Rolleri:** Öğrenci ve Eğitmen rolleriyle kullanıcı yönetimi.
