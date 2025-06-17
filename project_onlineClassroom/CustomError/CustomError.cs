@@ -74,6 +74,89 @@
         {
         }
     }
-
+    public class ClassNotFoundException : Exception
+    {
+        public ClassNotFoundException() : base("Class not found.")
+        {
+        }
+        public ClassNotFoundException(string message) : base(message)
+        {
+        }
+        public ClassNotFoundException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class ClassFullException : Exception
+    {
+        public ClassFullException() : base("Class is full.")
+        {
+        }
+        public ClassFullException(string message) : base(message)
+        {
+        }
+        public ClassFullException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class RoleMismatchForThisActionException : Exception
+    {
+        public RoleMismatchForThisActionException() : base("Role mismatch for this action.")
+        {
+        }
+        public RoleMismatchForThisActionException(string message) : base(message)
+        {
+        }
+        public RoleMismatchForThisActionException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class ClassAlreadyExistsException : Exception
+    {
+        public ClassAlreadyExistsException() : base("Class already exists.")
+        {
+        }
+        public ClassAlreadyExistsException(string message) : base(message)
+        {
+        }
+        public ClassAlreadyExistsException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class AlreadyParticipantException : Exception
+    {
+        public AlreadyParticipantException() : base("User is already a participant in this class.")
+        {
+        }
+        public AlreadyParticipantException(string message) : base(message)
+        {
+        }
+        public AlreadyParticipantException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class DataValidationException : Exception
+    {
+        public DataValidationException() : base("Data validation failed. Please correct your inputs.")
+        {
+        }
+        public DataValidationException(string message) : base(message)
+        {
+        }
+        public DataValidationException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
+    public class NotParticipantException : Exception
+    {
+        public NotParticipantException() : base("User is not a participant in this class.")
+        {
+        }
+        public NotParticipantException(string message) : base(message)
+        {
+        }
+        public NotParticipantException(string message, Exception inner) : base(message, inner)
+        {
+        }
+    }
 
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace project_onlineClassroom.Models;
 
@@ -64,8 +66,6 @@ public partial class AppDbContext : DbContext
         modelBuilder.Entity<Class>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Classes__3214EC274616FCFF");
-
-            entity.HasIndex(e => e.Title, "UQ__Classes__E52A1BB31A5E4CB9").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CreatedAt)

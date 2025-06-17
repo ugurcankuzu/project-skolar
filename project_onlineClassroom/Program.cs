@@ -14,12 +14,25 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Problem occured while fetching connection string from appsettings.json");
 
 
-builder.Services.AddDbContext<AppDbContext>(ctx => ctx.UseSqlServer(connectionString));
+builder.Services.AddDbContext<AppDbContext>(context => context.UseSqlServer(connectionString));
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddSingleton<JWTHelper>();
+builder.Services.AddScoped<IClassRepository, ClassRepository>();
+builder.Services.AddScoped<IClassService, ClassService>();
+builder.Services.AddScoped<IParticipantRepository, ParticipantRepository>();
+builder.Services.AddScoped<IParticipantService, ParticipantService>();
+builder.Services.AddScoped<ITopicRepository, TopicRepository>();
+builder.Services.AddScoped<ITopicService, TopicService>();
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy(name: "AllowedDomains", policy =>
+    {
+        policy.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+builder.Services.AddScoped<JWTHelper>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(setup =>
 {
@@ -44,7 +57,7 @@ builder.Services.AddSwaggerGen(setup =>
                     Id = JwtBearerDefaults.AuthenticationScheme
                 }
             },
-            new List<string>() 
+            new List<string>()
         }
     });
 });
@@ -73,17 +86,35 @@ builder.Services.AddAuthentication(opt =>
 });
 
 var app = builder.Build();
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("=== GLOBAL EXCEPTION HANDLER ===");
+        Console.WriteLine($"Path: {context.Request.Path}");
+        Console.WriteLine($"Method: {context.Request.Method}");
+        Console.WriteLine($"Exception: {ex.Message}");
+        Console.WriteLine($"StackTrace: {ex.StackTrace}");
+        Console.WriteLine("================================");
+        throw; // Re-throw to let other handlers deal with it
+    }
+});
 app.UseHttpsRedirection();
+app.UseCors("AllowedDomains");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }

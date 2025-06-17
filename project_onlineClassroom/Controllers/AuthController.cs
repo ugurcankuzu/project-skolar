@@ -2,9 +2,6 @@
 using project_onlineClassroom.CustomError;
 using project_onlineClassroom.DTOs;
 using project_onlineClassroom.Interfaces;
-using project_onlineClassroom.Models;
-using project_onlineClassroom.Repositories;
-using project_onlineClassroom.Util;
 
 namespace project_onlineClassroom.Controllers
 {
@@ -29,6 +26,7 @@ namespace project_onlineClassroom.Controllers
                 {
                     return BadRequest(new LoginDTO(false, "Invalid login request"));
                 }
+                Console.WriteLine("LOGİN İSTEĞİ: " + request);
                 string token = await _authService.LoginAsync(request);
                 return Ok(new LoginDTO(token));
             }
@@ -79,6 +77,27 @@ namespace project_onlineClassroom.Controllers
                 return StatusCode(500, new RegisterDTO(false, ex.Message));
             }
 
+        }
+
+        [HttpPost("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginRequest req)
+        {
+            string idToken = req.IdToken;
+            if (string.IsNullOrEmpty(idToken))
+            {
+                return BadRequest(new LoginDTO(false, "Google ID token is required."));
+            }
+            try
+            {
+                Console.WriteLine("Google login request received with ID token: " + idToken);
+                string token = await _authService.LoginWithGoogle(idToken);
+                return Ok(new LoginDTO(token));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error during Google login: " + ex.Message);
+                return StatusCode(500, new LoginDTO(false, "An error occurred during Google login."));
+            }
         }
     }
 }

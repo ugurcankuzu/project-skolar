@@ -1,4 +1,7 @@
-﻿namespace project_onlineClassroom.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace project_onlineClassroom.Models;
 
 public partial class User
 {
@@ -13,6 +16,8 @@ public partial class User
     public string LastName { get; set; } = null!;
 
     public bool IsEducator { get; set; }
+       public string? AuthProvider { get; set; } // "Google", "Facebook" veya "Local" (şifre ile giriş)
+    public string? ProviderKey { get; set; }  // Google'dan gelen benzersiz kullanıcı ID'si
 
     public DateTime CreatedAt { get; set; }
 
@@ -23,9 +28,4 @@ public partial class User
     public virtual ICollection<Participant> Participants { get; set; } = new List<Participant>();
 
     public virtual ICollection<SubmittedAssignment> SubmittedAssignments { get; set; } = new List<SubmittedAssignment>();
-
-    public static implicit operator Task<object>(User? v)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -1,4 +1,5 @@
-﻿using JWT;
+﻿using System.Security.Claims;
+using JWT;
 using JWT.Algorithms;
 using JWT.Exceptions;
 using JWT.Serializers;
@@ -21,7 +22,6 @@ namespace project_onlineClassroom.Util
             }
 
         }
-        //Mock Payload Object. TODO: Create a real DTO for the payload
 
         public string GenerateToken(User user)
         {
@@ -38,6 +38,14 @@ namespace project_onlineClassroom.Util
                 { "lastName", user.LastName },
                 { "exp", DateTimeOffset.UtcNow.AddMinutes(_expirationInMinutes).ToUnixTimeSeconds() }
         }; // Token expiration time
+            if (user.IsEducator)
+            {
+                payload.Add(ClaimTypes.Role, "educator");
+            }
+            else
+            {
+                payload.Add(ClaimTypes.Role, "student");
+            }
             string token = encoder.Encode(payload, _secretKey);
             return token;
         }

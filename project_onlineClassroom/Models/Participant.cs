@@ -1,4 +1,7 @@
-﻿namespace project_onlineClassroom.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace project_onlineClassroom.Models;
 
 public partial class Participant
 {
