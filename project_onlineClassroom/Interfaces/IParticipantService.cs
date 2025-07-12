@@ -18,7 +18,7 @@ namespace project_onlineClassroom.Interfaces
         /// <param name="userId"></param>
         /// <param name="classId"></param>
         /// <returns><see cref="Task{Participant?}"/></returns>
-        Task<Participant?> GetParticipantInClassByUserIdAsync(int userId, int classId);
+        Task<Participant?> FindParticipantByUserIdAsync(int userId, int classId);
         Task DeleteParticipantFromClassByUserIdAsync(int userId, int classId);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using project_onlineClassroom.Models;
 
@@ -11,9 +12,11 @@ using project_onlineClassroom.Models;
 namespace project_onlineClassroom.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250625092511_IsFirstLoginField")]
+    partial class IsFirstLoginField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,37 +112,6 @@ namespace project_onlineClassroom.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Classes");
-                });
-
-            modelBuilder.Entity("project_onlineClassroom.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Link")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("project_onlineClassroom.Models.Participant", b =>
@@ -446,17 +418,6 @@ namespace project_onlineClassroom.Migrations
                         .HasConstraintName("FK__Classes__owner_I__4CA06362");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("project_onlineClassroom.Models.Notification", b =>
-                {
-                    b.HasOne("project_onlineClassroom.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("project_onlineClassroom.Models.Participant", b =>

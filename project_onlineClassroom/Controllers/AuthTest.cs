@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using project_onlineClassroom.DTOs;
+using project_onlineClassroom.DTOs.AuthDTOs;
 
 namespace project_onlineClassroom.Controllers
 {

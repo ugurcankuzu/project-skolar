@@ -30,6 +30,7 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<TopicNoteBlock> TopicNoteBlocks { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+    public virtual DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

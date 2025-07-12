@@ -12,6 +12,7 @@ namespace project_onlineClassroom.DTOs.UserDTOs
         public bool IsEducator { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public bool IsFirstLogin { get; set; } = true;
 
         public ProfileDTO() { }
         public ProfileDTO(User user)
@@ -20,6 +21,7 @@ namespace project_onlineClassroom.DTOs.UserDTOs
             FirstName = user.FirstName;
             LastName = user.LastName;
             Email = user.Email;
+            IsFirstLogin = user.IsFirstLogin;
             IsEducator = user.IsEducator;
             CreatedAt = user.CreatedAt;
             UpdatedAt = user.UpdatedAt;

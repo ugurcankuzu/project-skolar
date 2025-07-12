@@ -74,6 +74,12 @@ namespace project_onlineClassroom.Interfaces
         /// <exception cref="ClassNotFoundException"></exception>
         /// <exception cref="UserNotFoundException"></exception>
         Task LeaveClassAsync(int userId, int classId);
+        /// <summary>
+        /// Retrieves the count of classes associated with a specific educator by their ID. If the educator does not exist, throws a <see cref="UserNotFoundException"/>.
+        /// </summary>
+        /// <param name="educatorId"></param>
+        /// <returns></returns>
+        Task<int> GetClassCountByEducatorIdAsync(int educatorId);
     }
 }
 
