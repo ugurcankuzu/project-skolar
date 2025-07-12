@@ -16,7 +16,7 @@ namespace project_onlineClassroom.Interfaces
         /// </summary>
         /// <param name="id"></param>
         /// <returns><see cref="Task{User?}"/></returns>
-        Task<User?> GetByIdAsync(int id);
+        Task<User> GetByIdAsync(int id);
         /// <summary>
         /// Adds a new user to the database and saves changes asynchronously.
         /// </summary>
@@ -34,7 +34,7 @@ namespace project_onlineClassroom.Interfaces
         /// </summary>
         /// <param name="email"></param>
         /// <returns><see cref="Task{User?}"/></returns>
-        Task<User?> GetByEmailAsync(string email);
+        Task<User?> FindByEmailAsync(string email);
         /// <summary>
         /// Updates an existing user in the database and saves changes asynchronously.
         /// </summary>
@@ -45,6 +45,6 @@ namespace project_onlineClassroom.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         Task Delete(User entity);
-        Task<User?> GetByProviderKey(string providerKey, string authProvider = "Google");
+        Task<User?> FindByProviderKey(string providerKey, string authProvider = "Google");
     }
 }

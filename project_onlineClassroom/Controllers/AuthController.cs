@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using project_onlineClassroom.CustomError;
-using project_onlineClassroom.DTOs;
+using project_onlineClassroom.DTOs.AuthDTOs;
 using project_onlineClassroom.Interfaces;
 
 namespace project_onlineClassroom.Controllers

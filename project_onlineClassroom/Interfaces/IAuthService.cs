@@ -1,6 +1,5 @@
-﻿
-using project_onlineClassroom.DTOs;
-using project_onlineClassroom.CustomError;
+﻿using project_onlineClassroom.CustomError;
+using project_onlineClassroom.DTOs.AuthDTOs;
 
 namespace project_onlineClassroom.Interfaces
 {
@@ -22,5 +21,6 @@ namespace project_onlineClassroom.Interfaces
         /// <exception cref="UserExistsException"></exception>
         Task RegisterAsync(RegisterRequest registerRequest);
         Task<string> LoginWithGoogle(string idToken);
+
     }
 }

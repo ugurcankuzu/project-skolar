@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace project_onlineClassroom.DTOs
+namespace project_onlineClassroom.DTOs.AuthDTOs
 {
     public class GoogleLoginRequest
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace project_onlineClassroom.DTOs
+namespace project_onlineClassroom.DTOs.AuthDTOs
 {
     public class RegisterRequest
     {
@@ -18,15 +18,13 @@ namespace project_onlineClassroom.DTOs
         [Required(ErrorMessage = "Last Name is Required.")]
         [StringLength(50, ErrorMessage = "Last Name cannot be longer than 50 characters.")]
         public string LastName { get; set; }
-        public bool IsEducator { get; set; } = false;
-        public RegisterRequest(string email, string password, string confirmPassword, string firstName, string lastName, bool isEducator)
+        public RegisterRequest(string email, string password, string confirmPassword, string firstName, string lastName)
         {
             Email = email;
             Password = password;
             ConfirmPassword = confirmPassword;
             FirstName = firstName;
             LastName = lastName;
-            IsEducator = isEducator;
 
         }
     }

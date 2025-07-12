@@ -16,9 +16,9 @@ public partial class User
     public string LastName { get; set; } = null!;
 
     public bool IsEducator { get; set; }
-       public string? AuthProvider { get; set; } // "Google", "Facebook" veya "Local" (şifre ile giriş)
+    public string? AuthProvider { get; set; } // "Google", "Facebook" veya "Local" (şifre ile giriş)
     public string? ProviderKey { get; set; }  // Google'dan gelen benzersiz kullanıcı ID'si
-
+    public bool IsFirstLogin { get; set; } = true; // İlk girişte rol belirleme için
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
