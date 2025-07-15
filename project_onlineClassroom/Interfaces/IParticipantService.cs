@@ -20,6 +20,7 @@ namespace project_onlineClassroom.Interfaces
         /// <returns><see cref="Task{Participant?}"/></returns>
         Task<Participant?> FindParticipantByUserIdAsync(int userId, int classId);
         Task DeleteParticipantFromClassByUserIdAsync(int userId, int classId);
+        
     }
 }
 

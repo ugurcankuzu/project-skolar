@@ -8,6 +8,8 @@ namespace project_onlineClassroom.Interfaces
         Task<List<Class>> GetClassesByEducatorIdAsync(int educatorId);
         Task<Class> CreateClassAsync(Class @class);
         Task<int> GetNumberOfClassesByEducatorIdAsync(int educatorId);
+        Task<int> GetNumberOfClassesByStudentIdAsync(int userId);
+        Task<List<Class>> GetClassesByStudentIdAsync(int id);
     }
 }
 

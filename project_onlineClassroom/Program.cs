@@ -1,8 +1,10 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using project_onlineClassroom.DTOs;
 using project_onlineClassroom.Interfaces;
 using project_onlineClassroom.Models;
 using project_onlineClassroom.Repositories;
@@ -62,6 +64,37 @@ builder.Services.AddSwaggerGen(setup =>
             new List<string>()
         }
     });
+    setup.CustomSchemaIds(type =>
+    {
+        // Check if the type is GenericResponse<T>
+        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(GenericResponse<>))
+        {
+            // Get the inner type (e.g., ClassDTO or List<ClassDTO>)
+            var innerType = type.GetGenericArguments()[0];
+
+            // Check if the inner type is itself a Generic List, Collection, or IEnumerable
+            if (innerType.IsGenericType &&
+                (innerType.GetGenericTypeDefinition() == typeof(List<>) ||
+                 innerType.GetGenericTypeDefinition() == typeof(ICollection<>) ||
+                 innerType.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
+            {
+                // Get the actual type inside the list (e.g., ClassDTO)
+                var listItemType = innerType.GetGenericArguments()[0];
+                // "ListOf" + "ClassDTO" + "Response" -> "ListOfClassDTOResponse"
+                return $"ListOf{listItemType.Name}Response";
+            }
+            else
+            {
+                // If T is a simple type (e.g., ClassDTO), use the old logic
+                // "ClassDTO" + "Response" -> "ClassDTOResponse"
+                return $"{innerType.Name}Response";
+            }
+        }
+
+        // Use the default name for all other types
+        return type.Name;
+    });
+
 });
 
 builder.Services.AddControllers();

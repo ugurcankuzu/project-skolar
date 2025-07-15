@@ -20,7 +20,7 @@ namespace project_onlineClassroom.Services
         /// <exception cref="UserNotFoundException"></exception>
         /// <exception cref="RoleMismatchForThisActionException"></exception>
         /// <returns></returns>
-        public async Task<SummaryEducatorDTO> GetDashboardSummaryAsync(int userId)
+        public async Task<SummaryEducatorDTO> GetDashboardSummaryEducatorAsync(int userId)
         {
             //Get Number of Classes
             int numberOfClasses = await _classService.GetClassCountByEducatorIdAsync(userId);
@@ -35,6 +35,24 @@ namespace project_onlineClassroom.Services
                 TotalClassrooms = numberOfClasses,
                 OpenAssignments = numOfOpenAssignments,
                 SubmittedAssignments = numOfSubmittedAssignments,
+            };
+        }
+        /// <summary>
+        /// Retrieves a summary of the student's dashboard, including the number of classes they are enrolled in.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<SummaryStudentDTO> GetDashboardSummaryStudentAsync(int userId)
+        {
+            int numberOfClasses = await _classService.GetClassCountByStudentIdAsync(userId);
+            int submittedAssignments = 0; // Placeholder, implement logic to get open assignments count
+            int incompleteAssignments = 0; // Placeholder, implement logic to get submitted assignments count
+
+            return new SummaryStudentDTO
+            {
+                IncompleteAssignments = incompleteAssignments,
+                SubmittedAssignments = submittedAssignments,
+                TotalCourses = numberOfClasses
             };
         }
     }
