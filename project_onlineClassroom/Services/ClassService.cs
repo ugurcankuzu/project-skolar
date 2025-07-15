@@ -167,5 +167,27 @@ namespace project_onlineClassroom.Services
             }
             return await _classRepository.GetNumberOfClassesByEducatorIdAsync(educatorId);
         }
+        /// <summary>
+        /// Returns the number of classes a student is enrolled in by their user ID.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="RoleMismatchForThisActionException"></exception>
+        public async Task<int> GetClassCountByStudentIdAsync(int userId)
+        {
+            User user = await _userService.GetUserProfileByIdAsync(userId);
+            if (user.IsEducator)
+            {
+                throw new RoleMismatchForThisActionException("Educators cannot have classes as students.");
+            }
+            return await _classRepository.GetNumberOfClassesByStudentIdAsync(userId);
+        }
+
+        public async Task<List<Class>> GetClassesByStudentIdAsync(int id)
+        {
+            await _userService.GetUserProfileByIdAsync(id); // Validate user exists
+            List<Class> classes = await _classRepository.GetClassesByStudentIdAsync(id);
+            return classes;
+        }
     }
 }

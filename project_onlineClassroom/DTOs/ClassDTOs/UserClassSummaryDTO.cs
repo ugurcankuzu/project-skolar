@@ -2,7 +2,7 @@
 
 namespace project_onlineClassroom.DTOs.ClassDTOs
 {
-    public class GetUserClassesEducatorResponse
+    public class UserClassSummaryDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -11,7 +11,7 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public GetUserClassesEducatorResponse(Class @class)
+        public UserClassSummaryDTO(Class @class)
         {
             Id = @class.Id;
             Title = @class.Title;

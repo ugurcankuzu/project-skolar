@@ -4,6 +4,7 @@ namespace project_onlineClassroom.Interfaces
 {
     public interface ISummaryService
     {
-        Task<SummaryEducatorDTO> GetDashboardSummaryAsync(int userId);
+        Task<SummaryEducatorDTO> GetDashboardSummaryEducatorAsync(int userId);
+        Task<SummaryStudentDTO> GetDashboardSummaryStudentAsync(int userId);
     }
 }

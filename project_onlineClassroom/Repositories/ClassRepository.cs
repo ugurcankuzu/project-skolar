@@ -70,5 +70,20 @@ namespace project_onlineClassroom.Repositories
             return _context.Classes
                 .CountAsync(c => c.OwnerId == educatorId);
         }
+        /// <summary>
+        /// Retrieves the total number of classes that a specific student is enrolled in.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Task<int> GetNumberOfClassesByStudentIdAsync(int userId)
+        {
+            return _context.Classes.Where(c => c.Participants.Any(p => p.UserId == userId))
+                .CountAsync();
+        }
+
+        public Task<List<Class>> GetClassesByStudentIdAsync(int id)
+        {
+            return _context.Classes.Where(c => c.Participants.Any(p => p.UserId == id)).ToListAsync();
+        }
     }
 }

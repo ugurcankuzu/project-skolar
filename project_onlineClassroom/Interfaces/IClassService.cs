@@ -80,6 +80,8 @@ namespace project_onlineClassroom.Interfaces
         /// <param name="educatorId"></param>
         /// <returns></returns>
         Task<int> GetClassCountByEducatorIdAsync(int educatorId);
+        Task<int> GetClassCountByStudentIdAsync(int userId);
+        Task<List<Class>> GetClassesByStudentIdAsync(int id);
     }
 }
 

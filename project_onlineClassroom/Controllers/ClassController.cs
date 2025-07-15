@@ -43,7 +43,7 @@ namespace project_onlineClassroom.Controllers
 
         [HttpGet("my-classes")]
         [Authorize]
-        [ProducesResponseType(typeof(GenericResponse<List<GetUserClassesEducatorResponse>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericResponse<List<UserClassSummaryDTO>>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(GenericResponse<object>), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(GenericResponse<object>), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(GenericResponse<object>), StatusCodes.Status500InternalServerError)]
@@ -62,12 +62,14 @@ namespace project_onlineClassroom.Controllers
                 if (isEducator)
                 {
                     List<Class> classes = await _classService.GetClassesByEducatorIdAsync(id);
-                    List<GetUserClassesEducatorResponse> classDTOs = [.. classes.Select(c => new GetUserClassesEducatorResponse(c))];
-                    return Ok(new GenericResponse<List<GetUserClassesEducatorResponse>>(classDTOs));
+                    List<UserClassSummaryDTO> classDTOs = [.. classes.Select(c => new UserClassSummaryDTO(c))];
+                    return Ok(new GenericResponse<List<UserClassSummaryDTO>>(classDTOs));
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    List<Class> classes = await _classService.GetClassesByStudentIdAsync(id);
+                    List<UserClassSummaryDTO> classDTOs = [.. classes.Select(c => new UserClassSummaryDTO(c))];
+                    return Ok(new GenericResponse<List<UserClassSummaryDTO>>(classDTOs));
                 }
             }
             catch (UserNotFoundException ex)
