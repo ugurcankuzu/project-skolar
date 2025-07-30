@@ -10,6 +10,8 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         public byte UserLimit { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string? ImageUrl { get; set; } // Optional image URL for the class
+        public string? ImagePublicId { get; set; } // Optional public ID for the image (e.g., from a cloud storage service)
 
         public UserClassSummaryDTO(Class @class)
         {
@@ -19,6 +21,8 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
             UserLimit = @class.UserLimit;
             CreatedAt = @class.CreatedAt;
             UpdatedAt = @class.UpdatedAt;
+            ImagePublicId = @class.ImagePublicId;
+            ImageUrl = @class.ImageUrl;
         }
     }
 }

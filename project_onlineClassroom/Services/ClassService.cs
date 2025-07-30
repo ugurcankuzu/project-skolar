@@ -94,6 +94,9 @@ namespace project_onlineClassroom.Services
             Class @class = new Class
             {
                 Title = req.Title,
+                Description = req.Description,
+                ImageUrl = req.ImageUrl, // Optional, can be null
+                ImagePublicId = req.ImagePublicId, // Optional, can be null
                 UserLimit = req.UserLimit,
                 OwnerId = educatorId,
                 CreatedAt = DateTime.UtcNow,
@@ -163,7 +166,7 @@ namespace project_onlineClassroom.Services
             User user = await _userService.GetUserProfileByIdAsync(educatorId);
             if (!user.IsEducator)
             {
-                throw new RoleMismatchForThisActionException("Only educators can have classes.");
+                throw new CustomError.RoleMismatchForThisActionException("Only educators can have classes.");
             }
             return await _classRepository.GetNumberOfClassesByEducatorIdAsync(educatorId);
         }
@@ -178,7 +181,7 @@ namespace project_onlineClassroom.Services
             User user = await _userService.GetUserProfileByIdAsync(userId);
             if (user.IsEducator)
             {
-                throw new RoleMismatchForThisActionException("Educators cannot have classes as students.");
+                throw new CustomError.RoleMismatchForThisActionException("Educators cannot have classes as students.");
             }
             return await _classRepository.GetNumberOfClassesByStudentIdAsync(userId);
         }

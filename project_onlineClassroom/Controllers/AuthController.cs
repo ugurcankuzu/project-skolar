@@ -28,6 +28,13 @@ namespace project_onlineClassroom.Controllers
                 }
                 Console.WriteLine("LOGİN İSTEĞİ: " + request);
                 string token = await _authService.LoginAsync(request);
+                Response.Cookies.Append("skolar_access_token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true, // Set to true in production
+                    SameSite = SameSiteMode.None, // Cross-site cookies for Dev
+                    Expires = DateTimeOffset.UtcNow.AddHours(2) // Token expiration time
+                });
                 return Ok(new LoginDTO(token));
             }
             catch (UserNotFoundException ex)
@@ -91,6 +98,13 @@ namespace project_onlineClassroom.Controllers
             {
                 Console.WriteLine("Google login request received with ID token: " + idToken);
                 string token = await _authService.LoginWithGoogle(idToken);
+                Response.Cookies.Append("skolar_access_token", token, new CookieOptions
+                {
+                    HttpOnly = true,
+                    Secure = true, // Set to true in production
+                    SameSite = SameSiteMode.None, // Cross-site cookies for Dev
+                    Expires = DateTimeOffset.UtcNow.AddHours(2) // Token expiration time
+                });
                 return Ok(new LoginDTO(token));
             }
             catch (Exception ex)

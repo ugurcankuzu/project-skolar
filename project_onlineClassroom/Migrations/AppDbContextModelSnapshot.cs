@@ -82,6 +82,16 @@ namespace project_onlineClassroom.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("createdAt");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagePublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("OwnerId")
                         .HasColumnType("int")
                         .HasColumnName("owner_ID");

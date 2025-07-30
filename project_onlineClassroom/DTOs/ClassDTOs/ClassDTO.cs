@@ -7,9 +7,13 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         public int Id { get; set; }
         public string Title { get; set; }
         public byte UserLimit { get; set; }
+        public byte UserCount { get; set; }
         public string? Owner { get; set; } = null;
         //Participant entity model will be replaced by ParticipantDTO when it's ready.
         public List<Participant>? Participants { get; set; } = null;
+        public string? Description { get; set; } = null;
+        public string? imageUrl { get; set; } = null;
+        public string? imagePublicId { get; set; } = null;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
@@ -17,7 +21,9 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         {
             Id = @class.Id;
             Title = @class.Title;
+            Description = @class.Description;
             UserLimit = @class.UserLimit;
+            UserCount = (byte)@class.Participants.Count;
             CreatedAt = @class.CreatedAt;
             UpdatedAt = @class.UpdatedAt;
             if (@class.Owner != null) Owner = $"{@class.Owner.FirstName} {@class.Owner.LastName}";
@@ -30,6 +36,14 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
                     ClassId = p.ClassId,
                     JoinedAt = p.JoinedAt,
                 })];
+            }
+            if (@class.ImagePublicId != null)
+            {
+                imagePublicId = @class.ImagePublicId;
+            }
+            if (@class.ImageUrl != null)
+            {
+                imageUrl = @class.ImageUrl;
             }
         }
     }
