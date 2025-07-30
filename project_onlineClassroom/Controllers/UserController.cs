@@ -30,6 +30,7 @@ namespace project_onlineClassroom.Controllers
             try
             {
                 string? userId = User.FindFirstValue("id");
+                Console.WriteLine("USER ID: " + userId);
                 if (String.IsNullOrEmpty(userId) || !int.TryParse(userId, out int id)) throw new InvalidTokenException();
                 User user = await _userService.GetUserProfileByIdAsync(id);
                 return Ok(new GenericResponse<ProfileDTO>(new ProfileDTO(user)));

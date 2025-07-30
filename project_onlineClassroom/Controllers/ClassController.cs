@@ -14,8 +14,9 @@ namespace project_onlineClassroom.Controllers
     public class ClassController : ControllerBase
     {
         private readonly IClassService _classService;
-        public ClassController(IClassService classService) => _classService = classService;
-
+        private readonly IPhotoService _photoService;
+        public ClassController(IClassService classService, IPhotoService photoService) =>
+            (_classService, _photoService) = (classService, photoService);
         [HttpGet("{id}")]
         [Authorize]
         [ProducesResponseType(typeof(GenericResponse<ClassDTO>), StatusCodes.Status200OK)]
@@ -150,7 +151,7 @@ namespace project_onlineClassroom.Controllers
         // Takes class information from the request body
         // Returns class information - ClassDTO
 
-        public async Task<IActionResult> CreateClass([FromBody] CreateClassRequest req)
+        public async Task<IActionResult> CreateClass([FromForm] CreateClassRequest req)
         {
             try
             {
@@ -161,6 +162,12 @@ namespace project_onlineClassroom.Controllers
                 if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int id))
                 {
                     throw new InvalidTokenException();
+                }
+                if (req.ImageFile != null && req.ImageFile.Length > 0)
+                {
+                    var imageResult = await _photoService.AddPhotoAsync(req.ImageFile);
+                    req.ImageUrl = imageResult?.url;
+                    req.ImagePublicId = imageResult?.publicId;
                 }
                 Class @class = await _classService.CreateClassAsync(req, id);
                 ClassDTO classDTO = new ClassDTO(@class);

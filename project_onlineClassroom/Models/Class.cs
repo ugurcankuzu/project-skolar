@@ -10,6 +10,9 @@ public partial class Class
     public int OwnerId { get; set; }
 
     public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string? ImageUrl { get; set; } // Optional image URL for the class
+    public string? ImagePublicId { get; set; } // Optional public ID for the image (e.g., from a cloud storage service)
 
     public byte UserLimit { get; set; }
 

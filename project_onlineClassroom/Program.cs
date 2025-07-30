@@ -14,8 +14,14 @@ using project_onlineClassroom.Util;
 DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Problem occured while fetching connection string from appsettings.json");
-
-
+var cloudinarySettings = new CloudinarySettings
+{
+    CloudName = DotNetEnv.Env.GetString("CLOUDNAME") ?? throw new InvalidOperationException("Cloudinary Cloud Name is not set in .env file"),
+    ApiKey = DotNetEnv.Env.GetString("CLOUDINARY_API_KEY") ?? throw new InvalidOperationException("Cloudinary API Key is not set in .env file"),
+    ApiSecret = DotNetEnv.Env.GetString("CLOUDINARY_API_SECRET") ?? throw new InvalidOperationException("Cloudinary API Secret is not set in .env file")
+};
+builder.Services.AddSingleton(cloudinarySettings);
+builder.Services.AddSingleton<IPhotoService, PhotoService>();
 builder.Services.AddDbContext<AppDbContext>(context => context.UseSqlServer(connectionString));
 builder.Services.AddScoped<ISummaryService, SummaryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
@@ -33,7 +39,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy(name: "AllowedDomains", policy =>
     {
-        policy.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+        policy.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
     });
 });
 builder.Services.AddScoped<JWTHelper>();
@@ -117,7 +123,14 @@ builder.Services.AddAuthentication(opt =>
 
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(DotNetEnv.Env.GetString("AUTH_SECRET")))
     };
-
+    opt.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            context.Token = context.Request.Cookies["skolar_access_token"];
+            return Task.CompletedTask;
+        }
+    };
 });
 
 var app = builder.Build();
@@ -139,8 +152,8 @@ app.Use(async (context, next) =>
     }
 });
 app.UseHttpsRedirection();
-app.UseCors("AllowedDomains");
 app.UseRouting();
+app.UseCors("AllowedDomains");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
