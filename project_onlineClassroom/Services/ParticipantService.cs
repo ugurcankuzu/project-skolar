@@ -62,5 +62,18 @@ namespace project_onlineClassroom.Services
             // and does not throw an error if the record does not exist.
             await _participantRepository.DeleteParticipantAsync(userId, classId);
         }
+
+        public async Task<IEnumerable<Participant>> GetParticipantsByClassIdAsync(int classId)
+        {
+            return await _participantRepository.GetParticipantsInClassAsync(classId);
+        }
+
+        public async Task<bool> IsUserParticipantInClassAsync(int userId, int classId)
+        {
+            // This method checks if a user is a participant in a class by attempting to find the participant record.
+            // It returns true if the participant exists, false otherwise.
+            Participant? participant = await _participantRepository.FindParticipantAsync(userId, classId);
+            return participant != null;
+        }
     }
 }

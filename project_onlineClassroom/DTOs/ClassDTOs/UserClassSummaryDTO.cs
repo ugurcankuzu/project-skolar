@@ -8,6 +8,7 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         public string Title { get; set; }
         public byte UserCount { get; set; }
         public byte UserLimit { get; set; }
+        public string JoinCode { get; set; } = null!; // Unique code for joining the class
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public string? ImageUrl { get; set; } // Optional image URL for the class
@@ -19,6 +20,7 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
             Title = @class.Title;
             UserCount = (byte)@class.Participants.Count;
             UserLimit = @class.UserLimit;
+            JoinCode = @class.JoinCode;
             CreatedAt = @class.CreatedAt;
             UpdatedAt = @class.UpdatedAt;
             ImagePublicId = @class.ImagePublicId;

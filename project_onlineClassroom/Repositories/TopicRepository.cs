@@ -20,11 +20,15 @@ namespace project_onlineClassroom.Repositories
         /// </summary>
         /// <param name="classId">The unique ID of the class.</param>
         /// <returns>A <see cref="Task{List{Topic}}"/> containing the topics of the class.</returns>
-        public async Task<List<Topic>> GetAllTopicsInClass(int classId)
+        public async Task<List<Topic>> GetAllTopicsInClass(int classId, bool includeTopicNotes = false)
         {
-            return await _context.Topics
-                .Where(t => t.ClassId == classId)
-                .ToListAsync();
+            IQueryable<Topic> query = _context.Topics.Where(t => t.ClassId == classId);
+            if (includeTopicNotes)
+            {
+                query = query.Include(t => t.TopicNotes);
+            }
+            List<Topic> topics = await query.ToListAsync();
+            return topics;
         }
 
         /// <summary>

@@ -35,8 +35,8 @@ namespace project_onlineClassroom.Interfaces
         /// <exception cref="AlreadyParticipantException"></exception>
         /// <exception cref="ClassFullException"></exception>
         /// <param name="userId"> The ID of the user who wants to join the class.</param>
-        /// <param name="classId"> The ID of the class to join.</param>
-        Task<Participant> JoinClassAsync(int userId, int classId);
+        /// <param name="joinCode"> The join code for the class.</param>
+        Task<Participant> JoinClassAsync(int userId, string joinCode);
         /// <summary>
         /// Creates a new class with the provided details. If the educator does not exist, throws a <see cref="UserNotFoundException"/>.
         /// </summary>
@@ -80,8 +80,11 @@ namespace project_onlineClassroom.Interfaces
         /// <param name="educatorId"></param>
         /// <returns></returns>
         Task<int> GetClassCountByEducatorIdAsync(int educatorId);
+        Task AddStudentToClassByEmailAsync(int classId, string email,int currentUserId);
         Task<int> GetClassCountByStudentIdAsync(int userId);
         Task<List<Class>> GetClassesByStudentIdAsync(int id);
+        Task<IEnumerable<Topic>> GetTopicsInClassAsync(int classId);
+        Task<IEnumerable<Participant>> GetParticipantInClassAsync(int classId);
     }
 }
 

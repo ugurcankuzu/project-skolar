@@ -92,6 +92,11 @@ namespace project_onlineClassroom.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JoinCode")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
                     b.Property<int>("OwnerId")
                         .HasColumnType("int")
                         .HasColumnName("owner_ID");
@@ -115,6 +120,9 @@ namespace project_onlineClassroom.Migrations
 
                     b.HasKey("Id")
                         .HasName("PK__Classes__3214EC274616FCFF");
+
+                    b.HasIndex("JoinCode")
+                        .IsUnique();
 
                     b.HasIndex("OwnerId");
 

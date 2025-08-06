@@ -10,6 +10,7 @@ using project_onlineClassroom.Models;
 using project_onlineClassroom.Repositories;
 using project_onlineClassroom.Services;
 using project_onlineClassroom.Util;
+// using System.Text.Json.Serialization; // Bu satýrý artýk ihtiyacýnýz yoksa kaldýrabilirsiniz.
 
 DotNetEnv.Env.Load();
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ var cloudinarySettings = new CloudinarySettings
 };
 builder.Services.AddSingleton(cloudinarySettings);
 builder.Services.AddSingleton<IPhotoService, PhotoService>();
+builder.Services.AddScoped<IJoinCodeGenerator, JoinCodeGenerator>();
 builder.Services.AddDbContext<AppDbContext>(context => context.UseSqlServer(connectionString));
 builder.Services.AddScoped<ISummaryService, SummaryService>();
 builder.Services.AddScoped<INotificationService, NotificationService>();
@@ -103,7 +105,9 @@ builder.Services.AddSwaggerGen(setup =>
 
 });
 
+// Bu kýsým eski haline getirildi
 builder.Services.AddControllers();
+
 //JWT Bearer Middleware integration
 builder.Services.AddAuthentication(opt =>
 {

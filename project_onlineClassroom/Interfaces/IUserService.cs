@@ -28,6 +28,7 @@ namespace project_onlineClassroom.Interfaces
         /// <returns></returns>
         /// <exception cref="UserNotFoundException"></exception>
         Task DeleteUser(int id);
+        Task<User> GetUserProfileByEmail(string email);
         Task<User> GetUserProfileByProviderKey(string providerKey, string authProvider = "Google");
         Task<User> UpdateUserFirstLoginAsync(int id, bool isEducator);
     }

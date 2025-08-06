@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace project_onlineClassroom.Models;
 
+[Index(nameof(JoinCode),IsUnique = true)]
+
 public partial class Class
 {
+    [Key]
     public int Id { get; set; }
 
     public int OwnerId { get; set; }
@@ -14,6 +19,9 @@ public partial class Class
     public string? ImageUrl { get; set; } // Optional image URL for the class
     public string? ImagePublicId { get; set; } // Optional public ID for the image (e.g., from a cloud storage service)
 
+    [Required]
+    [StringLength(6)]
+    public string JoinCode { get; set; } = null!; // Unique code for joining the class
     public byte UserLimit { get; set; }
 
     public DateTime CreatedAt { get; set; }

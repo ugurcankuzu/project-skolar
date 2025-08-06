@@ -1,4 +1,5 @@
-﻿using project_onlineClassroom.Models;
+﻿using project_onlineClassroom.Migrations;
+using project_onlineClassroom.Models;
 
 namespace project_onlineClassroom.DTOs.ClassDTOs
 {
@@ -9,6 +10,7 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
         public byte UserLimit { get; set; }
         public byte UserCount { get; set; }
         public string? Owner { get; set; } = null;
+        public string JoinCode { get; set; } = null!; // Unique code for joining the class
         //Participant entity model will be replaced by ParticipantDTO when it's ready.
         public List<Participant>? Participants { get; set; } = null;
         public string? Description { get; set; } = null;
@@ -23,6 +25,7 @@ namespace project_onlineClassroom.DTOs.ClassDTOs
             Title = @class.Title;
             Description = @class.Description;
             UserLimit = @class.UserLimit;
+            JoinCode = @class.JoinCode;
             UserCount = (byte)@class.Participants.Count;
             CreatedAt = @class.CreatedAt;
             UpdatedAt = @class.UpdatedAt;

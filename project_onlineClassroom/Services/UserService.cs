@@ -99,5 +99,16 @@ namespace project_onlineClassroom.Services
             await _userRepository.Update(userToUpdate);
             return userToUpdate;
         }
+        /// <summary>
+        /// Retrieves a user's profile by their email address.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        /// <exception cref="UserNotFoundException"></exception>
+        public async Task<User> GetUserProfileByEmail(string email)
+        {
+            return await _userRepository.FindByEmailAsync(email)
+                ?? throw new UserNotFoundException($"User with email '{email}' not found.");
+        }
     }
 }

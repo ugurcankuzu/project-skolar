@@ -85,5 +85,20 @@ namespace project_onlineClassroom.Repositories
         {
             return _context.Classes.Where(c => c.Participants.Any(p => p.UserId == id)).ToListAsync();
         }
+
+        public async Task<Class> GetClassByJoinCodeAsync(string joinCode, bool includeParticipants = false, bool includeOwner = false)
+        {
+            IQueryable<Class> query = _context.Classes.AsQueryable();
+            if (includeParticipants)
+            {
+                query = query.Include(c => c.Participants);
+            }
+            if (includeOwner)
+            {
+                query = query.Include(c => c.Owner);
+            }
+            return await query.FirstOrDefaultAsync(c => c.JoinCode == joinCode)
+                ?? throw new ClassNotFoundException($"Class with join code {joinCode} not found.");
+        }
     }
 }

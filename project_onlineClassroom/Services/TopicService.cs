@@ -10,11 +10,9 @@ namespace project_onlineClassroom.Services
     public class TopicService : ITopicService
     {
         private readonly ITopicRepository _topicRepository;
-        private readonly IClassService _classService;
-        public TopicService(ITopicRepository topicRepository, IClassService classService)
+        public TopicService(ITopicRepository topicRepository)
         {
             _topicRepository = topicRepository;
-            _classService = classService;
         }
 
         /// <summary>
@@ -23,10 +21,9 @@ namespace project_onlineClassroom.Services
         /// <param name="classId">The unique ID of the class.</param>
         /// <returns>A <see cref="Task{List{Topic}}"/> containing all topics in the class. Returns an empty list if none exist.</returns>
         /// <exception cref="ClassNotFoundException">Propagated from the class service if the class with the specified ID does not exist.</exception>
-        public async Task<List<Topic>> GetAllTopicsInClassAsync(int classId)
+        public async Task<List<Topic>> GetAllTopicsInClassAsync(int classId, bool includeTopicNotes = false)
         {
-            await _classService.GetClassByIdAsync(classId); // Validates class existence.
-            return await _topicRepository.GetAllTopicsInClass(classId);
+            return await _topicRepository.GetAllTopicsInClass(classId, includeTopicNotes);
         }
 
         /// <summary>
@@ -51,8 +48,6 @@ namespace project_onlineClassroom.Services
         /// <exception cref="ClassNotFoundException">Propagated from the class service if the class specified in the topic's ClassId does not exist.</exception>
         public async Task<Topic> AddTopic(Topic topic)
         {
-            // Validate that the target class exists before creating a topic in it.
-            await _classService.GetClassByIdAsync(topic.ClassId);
             return await _topicRepository.CreateTopic(topic);
         }
 

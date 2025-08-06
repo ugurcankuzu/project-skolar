@@ -19,8 +19,9 @@ namespace project_onlineClassroom.Interfaces
         /// <param name="classId"></param>
         /// <returns><see cref="Task{Participant?}"/></returns>
         Task<Participant?> FindParticipantByUserIdAsync(int userId, int classId);
+        Task<IEnumerable<Participant>> GetParticipantsByClassIdAsync(int classId);
         Task DeleteParticipantFromClassByUserIdAsync(int userId, int classId);
-        
+        Task<bool> IsUserParticipantInClassAsync(int userId, int classId);
     }
 }
 

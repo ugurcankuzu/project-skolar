@@ -122,6 +122,7 @@ namespace project_onlineClassroom.Services
                         LastName = payload.FamilyName,
                         Email = payload.Email,
                         IsEducator = false,
+                        IsFirstLogin = true, // Ensure new Google users go through role selection
                         AuthProvider = "Google",
                         ProviderKey = payload.Subject,
                         // Hash a random password for consistency, as it won't be used for login.
